@@ -15,6 +15,9 @@ This repo of code is written for Tensorflow. Please install all required package
 pip install -r requirements.txt
 ```
 
+### Dataset Collecttion
+The Project can only solve problems of binary segmentation at present.So you can only collect a dataset with labels of binary segmentation and split into 3 directories labeled 'train', 'val' and 'test', each of which has 2 subfolders named 'main' and 'segmentation', while 'main' should store original images and 'segemntation' should store segmentation images.
+
 ### Data Augmentation
 ```bash
 python data_augment.py --dir data/train
