@@ -45,20 +45,20 @@ def conv_block(batch_input, filters, kernel_size=3, strides=(2, 2), k=0, initial
 	nb_filter1, nb_filter2, nb_filter3 = filters
 	
 	######### -*- branch 1 -*- #########
-        res_branch1 = tf.layers.conv2d(batch_input, nb_filter3, kernel_size=1, strides=strides, padding="valid", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
-        bn_branch1 = batchnorm(res_branch1)
-        
-        ######### -*- branch 2 -*- #########
-        res_branch2a = tf.layers.conv2d(batch_input, nb_filter1, kernel_size=1, strides=strides, padding="valid", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
-        bn_branch2a = batchnorm(res_branch2a)
-        lrelu_branch2a = lrelu(bn_branch2a, k)
-        
-        res_branch2b = tf.layers.conv2d(lrelu_branch2a, nb_filter2, kernel_size=kernel_size, strides=(1, 1), padding="same", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
-        bn_branch2b = batchnorm(res_branch2b)
-        lrelu_branch2b = lrelu(bn_branch2b, k)
-        
-        res_branch2c = tf.layers.conv2d(lrelu_branch2b, nb_filter3, kernel_size=1, strides=(1, 1), padding="valid", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
-        bn_branch2c = batchnorm(res_branch2c)
+	res_branch1 = tf.layers.conv2d(batch_input, nb_filter3, kernel_size=1, strides=strides, padding="valid", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
+	bn_branch1 = batchnorm(res_branch1)
+	
+	######### -*- branch 2 -*- #########
+	res_branch2a = tf.layers.conv2d(batch_input, nb_filter1, kernel_size=1, strides=strides, padding="valid", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
+	bn_branch2a = batchnorm(res_branch2a)
+	lrelu_branch2a = lrelu(bn_branch2a, k)
+	
+	res_branch2b = tf.layers.conv2d(lrelu_branch2a, nb_filter2, kernel_size=kernel_size, strides=(1, 1), padding="same", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
+	bn_branch2b = batchnorm(res_branch2b)
+	lrelu_branch2b = lrelu(bn_branch2b, k)
+	
+	res_branch2c = tf.layers.conv2d(lrelu_branch2b, nb_filter3, kernel_size=1, strides=(1, 1), padding="valid", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
+	bn_branch2c = batchnorm(res_branch2c)
 	
 	return lrelu(bn_branch1 + bn_branch2c, k)
 
@@ -69,8 +69,8 @@ def rrb(batch_input, filters, kernel_size=3, k=0, initializer=tf.random_normal_i
 	
 	refine_input = tf.layers.conv2d(batch_input, nb_filter2, kernel_size=1, strides=(1, 1), padding="valid", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
 	res_branch2a = tf.layers.conv2d(refine_input, nb_filter1, kernel_size=kernel_size, strides=(1, 1), padding="same", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
-        bn_branch2a = batchnorm(res_branch2a)
-        lrelu_branch2a = lrelu(bn_branch2a, k)
+	bn_branch2a = batchnorm(res_branch2a)
+	lrelu_branch2a = lrelu(bn_branch2a, k)
 	res_branch2b = tf.layers.conv2d(lrelu_branch2a, nb_filter2, kernel_size=kernel_size, strides=(1, 1), padding="same", kernel_initializer=initializer, kernel_regularizer=kernel_regularizer, bias_regularizer=bias_regularizer)
 	
 	return lrelu(refine_input + res_branch2b, k)
