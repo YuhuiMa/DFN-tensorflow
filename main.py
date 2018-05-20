@@ -33,7 +33,7 @@ def train(result, model, logdir, train_sum_freq, val_sum_freq, save_freq, models
 			trX, trY = get_batch_of_trainval(result, "train", model.batch_size)
 			_, total_loss, softmax_loss, focal_loss, mean_iou = sess.run([model.train_op, model.total_loss, model.total_ce, model.fl, model.mean_iou], feed_dict={model.X: trX, model.Y: trY})
 			
-			# assert not np.isnan(total_loss), "Something wrong! loss is nan..."
+			assert not np.isnan(total_loss), "Something wrong! loss is nan..."
 			
 			print("total loss: {}, softmax loss: {}, focal loss: {}, mean iou: {}".format(total_loss, softmax_loss, focal_loss, mean_iou))
 			fd.write("total loss: {}, softmax loss: {}, focal loss: {}, mean iou: {}\n".format(total_loss, softmax_loss, focal_loss, mean_iou))
