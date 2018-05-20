@@ -30,6 +30,6 @@ def focal_loss(y_true, y_pred, alpha=0.25, gamma=2.0):
 		
 		pk = tf.reduce_sum(y_true * y_pred, 3, keep_dims=True)
 	
-	fl = -alpha * tf.reduce_mean(tf.pow(1.0 - pk, gamma) * tf.log(pk))
+	fl = -alpha * tf.reduce_mean(tf.pow(1.0 - pk, gamma) * tf.log(tf.clip_by_value(pk, 1e-12, 1.0)))
 	
 	return fl
