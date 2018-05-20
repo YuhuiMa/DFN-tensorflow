@@ -124,6 +124,14 @@ def main(_):
 	
 	if cfg.is_training:
 		
+		if not tf.gfile.Exists(cfg.logdir):
+			
+			tf.gfile.MakeDirs(cfg.logdir)
+		
+		if not tf.gfile.Exists(cfg.models):
+			
+			tf.gfile.MakeDirs(cfg.models)
+		
 		if os.path.exists(cfg.log):
 			
 			os.remove(cfg.log)
@@ -137,6 +145,10 @@ def main(_):
 		fd.close()
 	
 	else:
+		
+		if not tf.gfile.Exists(cfg.test_outputs):
+			
+			tf.gfile.MakeDirs(cfg.test_outputs)
 		
 		tf.logging.info('Start testing...')
 		test(result, model, cfg.models, cfg.test_outputs)
