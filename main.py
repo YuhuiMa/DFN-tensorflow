@@ -78,8 +78,8 @@ def train(result, model, logdir, train_sum_freq, val_sum_freq, save_freq, models
 				fd.write("Saving model for iter %d...\n" % global_step)
 				model.saver.save(sess, models + "/model_iter_%04d" % global_step, global_step=global_step)
 		
-		print("Total time: %d" % time.time() - start)
-		fd.write("Total time: %d" % time.time() - start)
+		print("Total time: %d" % (time.time() - start))
+		fd.write("Total time: %d" % (time.time() - start))
 
 def test(result, model, models, test_outputs):
 	
@@ -109,7 +109,7 @@ def test(result, model, models, test_outputs):
 				output.save(test_outputs + "/" + filenames[j])
 				print(test_outputs + "/" + filenames[j] + " has been saved.")
 		
-		print("Total time: %d" % time.time() - start)
+		print("Total time: %d" % (time.time() - start))
 		print("All results have been saved.")
 
 def main(_):
