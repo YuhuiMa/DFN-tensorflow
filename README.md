@@ -3,6 +3,8 @@ This repo is the tensorflow implementation of Discriminative Feature Network (DF
 
 The original paper for DFN can be found at https://arxiv.org/abs/1804.09337.
 
+![model_figure](assets/DFN_model_figure.png)
+
 ## Condensed Abstract
 
 Most existing methods of semantic segmentation still suffer from two aspects of challenges: intra-class inconsistency and inter-class indistinction. To tackle these two problems, we propose a Discriminative Feature Network (DFN), which contains two sub-networks: Smooth Network and Border Network. Specifically, to handle the intra-class inconsistency problem, we specially design a Smooth Network with Channel Attention Block and global average pooling to select the more discriminative features. Furthermore, we propose a Border Network to make the bilateral features of boundary distinguishable with deep semantic boundary supervision. 
