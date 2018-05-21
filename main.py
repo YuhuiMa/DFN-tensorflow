@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import math
 import time
 import numpy as np
 import tensorflow as tf
@@ -83,7 +84,7 @@ def train(result, model, logdir, train_sum_freq, val_sum_freq, save_freq, models
 
 def test(result, model, models, test_outputs):
 	
-	num_te_batch = len(result["test"]) // model.batch_size + 1
+	num_te_batch = int(math.ceil(float(len(result["test"]) / model.batch_size)))
 	idx = 0
 	config = tf.ConfigProto()
 	config.gpu_options.allow_growth = True
