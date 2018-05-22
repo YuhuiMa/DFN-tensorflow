@@ -71,7 +71,7 @@ class DFN(object):
 		######### -*- Smooth Network -*- #########
 		with tf.variable_scope("smooth"):
 			
-			self.o1, self.o2, self.o3, self.o4, self.ofuse = nn_smooth(self.ib_2, self.ib_3, self.ib_4, self.ib_5, self.global_avg_pool, k=0, initializer=tf.random_normal_initializer(0, self.stddev), regularizer=tf.contrib.layers.l2_regularizer(self.regularization_scale))
+			self.b1, self.b2, self.b3, self.b4, self.fuse = nn_smooth(self.ib_2, self.ib_3, self.ib_4, self.ib_5, self.global_avg_pool, k=0, initializer=tf.random_normal_initializer(0, self.stddev), regularizer=tf.contrib.layers.l2_regularizer(self.regularization_scale))
 		
 		######### -*- Border Network -*- #########
 		with tf.variable_scope("border"):
@@ -81,11 +81,11 @@ class DFN(object):
 	def loss(self):
 		
 		######### -*- Softmax Loss -*- #########
-		self.softmax_o1, self.ce1 = pw_softmaxwithloss_2d(self.Y, self.o1)
-		self.softmax_o2, self.ce2 = pw_softmaxwithloss_2d(self.Y, self.o2)
-		self.softmax_o3, self.ce3 = pw_softmaxwithloss_2d(self.Y, self.o3)
-		self.softmax_o4, self.ce4 = pw_softmaxwithloss_2d(self.Y, self.o4)
-		self.softmax_ofuse, self.cefuse = pw_softmaxwithloss_2d(self.Y, self.ofuse)
+		self.softmax_b1, self.ce1 = pw_softmaxwithloss_2d(self.Y, self.b1)
+		self.softmax_b2, self.ce2 = pw_softmaxwithloss_2d(self.Y, self.b2)
+		self.softmax_b3, self.ce3 = pw_softmaxwithloss_2d(self.Y, self.b3)
+		self.softmax_b4, self.ce4 = pw_softmaxwithloss_2d(self.Y, self.b4)
+		self.softmax_fuse, self.cefuse = pw_softmaxwithloss_2d(self.Y, self.fuse)
 		self.total_ce = self.ce1 + self.ce2 + self.ce3 + self.ce4 + self.cefuse
 		
 		######### -*- Focal Loss -*- #########
@@ -96,7 +96,7 @@ class DFN(object):
 	
 	def evaluation(self):
 		
-		self.prediction = tf.argmax(self.ofuse, axis = 3)
+		self.prediction = tf.argmax(self.fuse, axis = 3)
 		self.ground_truth = tf.argmax(self.Y, axis = 3)
 		self.iou = cal_iou(self.ground_truth, self.prediction)
 		self.mean_iou = tf.reduce_mean(self.iou)
