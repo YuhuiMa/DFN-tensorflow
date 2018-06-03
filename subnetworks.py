@@ -98,28 +98,28 @@ def nn_smooth(ib_2, ib_3, ib_4, ib_5, global_avg_pool, k=0, initializer=tf.rando
 	######### -*- stage 5 -*- #########
 	cab5_input1 = rrb(ib_5, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	cab5_input2 = tf.layers.conv2d_transpose(global_avg_pool, 512, kernel_size=1, strides=(cab5_input1.get_shape().as_list()[1], cab5_input1.get_shape().as_list()[2]), padding="valid", kernel_initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
-	cab5_output = cab(cab5_input1, cab5_input2, 128, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
+	cab5_output = cab(cab5_input1, cab5_input2, 512, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	rrb5_output = rrb(cab5_output, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	
 	######### -*- stage 4 -*- #########
 	cab4_input1 = rrb(ib_4, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	cab4_input2 = tf.layers.conv2d_transpose(rrb5_output, 512, kernel_size=1, strides=(2, 2), padding="valid", kernel_initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	b4 = side_branch(cab4_input2, NUM_CLASSES, 16, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
-	cab4_output = cab(cab4_input1, cab4_input2, 128, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
+	cab4_output = cab(cab4_input1, cab4_input2, 512, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	rrb4_output = rrb(cab4_output, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	
 	######### -*- stage 3 -*- #########
 	cab3_input1 = rrb(ib_3, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	cab3_input2 = tf.layers.conv2d_transpose(rrb4_output, 512, kernel_size=1, strides=(2, 2), padding="valid", kernel_initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	b3 = side_branch(cab3_input2, NUM_CLASSES, 8, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
-	cab3_output = cab(cab3_input1, cab3_input2, 128, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
+	cab3_output = cab(cab3_input1, cab3_input2, 512, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	rrb3_output = rrb(cab3_output, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	
 	######### -*- stage 2 -*- #########
 	cab2_input1 = rrb(ib_2, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	cab2_input2 = tf.layers.conv2d_transpose(rrb3_output, 512, kernel_size=1, strides=(2, 2), padding="valid", kernel_initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	b2 = side_branch(cab2_input2, NUM_CLASSES, 4, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
-	cab2_output = cab(cab2_input1, cab2_input2, 128, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
+	cab2_output = cab(cab2_input1, cab2_input2, 512, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	rrb2_output = rrb(cab2_output, [512, 512], kernel_size=3, k=k, initializer=initializer, kernel_regularizer=regularizer, bias_regularizer=regularizer)
 	
 	######### -*- stage 1 -*- #########
