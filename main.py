@@ -91,7 +91,6 @@ def test(result, model, models, test_outputs):
 	
 	with tf.Session(config=config, graph=model.graph) as sess:
 		
-		sess.run(tf.global_variables_initializer())
 		model.saver.restore(sess, tf.train.latest_checkpoint(models))
 		tf.logging.info("Model restored!")
 		print("Test phase: ")
