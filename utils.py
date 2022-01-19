@@ -114,6 +114,7 @@ def get_batch_of_test(result, start_id, batch_size=32):
 	
 	for idx in range(start_id, next_start_id):
 		
+		category = "test"
 		category_path = os.path.join(image_dir, category)
 		main_path = os.path.join(category_path, "main/" + filenames[idx])
 		# segmentation_path = os.path.join(category_path, "segmentation/" + filenames[idx])
